@@ -2,6 +2,14 @@
 
 namespace UiBuilder\Form;
 
+use UiBuilder\Form\View\Email;
+use UiBuilder\Form\View\Error;
+use UiBuilder\Form\View\Input;
+use UiBuilder\Form\View\Label;
+use UiBuilder\Form\View\Button;
+use UiBuilder\Form\View\Textbox;
+use UiBuilder\Form\View\Textarea;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class FormServiceProvider extends ServiceProvider
@@ -15,9 +23,18 @@ class FormServiceProvider extends ServiceProvider
          * Optional methods to load your package assets
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'form');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'form');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'form');
+        $this->loadViewComponentsAs('',[
+            'form.input' => Input::class,
+            'form.label' => Label::class,
+            'form.error'=> Error::class,
+            'form.textbox' => Textbox::class,
+            'form.email'=>Email::class,
+            'form.textarea' => Textarea::class,
+            'form.button' => Button::class,
+        ]);
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+        // $this->loadRoutesFrom(__DIR__.'/4.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([

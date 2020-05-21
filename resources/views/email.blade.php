@@ -1,0 +1,1 @@
+<x-form.input type="email" :name="$name" {{ $attributes }} />
