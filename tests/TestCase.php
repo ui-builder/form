@@ -2,15 +2,19 @@
 
 namespace UiBuilder\Form\Tests;
 
-use Orchestra\Testbench\TestCase;
+use Livewire\LivewireServiceProvider;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 use UiBuilder\Form\FormServiceProvider;
 
-class ExampleTest extends TestCase
+class TestCase extends BaseTestCase
 {
 
     protected function getPackageProviders($app)
     {
-        return [FormServiceProvider::class];
+        return [
+            FormServiceProvider::class,
+            LivewireServiceProvider::class,
+        ];
     }
     
     /** @test */

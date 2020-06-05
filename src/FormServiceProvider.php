@@ -2,6 +2,8 @@
 
 namespace UiBuilder\Form;
 
+use Livewire\Livewire;
+use UiBuilder\Form\View\Form;
 use UiBuilder\Form\View\Email;
 use UiBuilder\Form\View\Error;
 use UiBuilder\Form\View\Input;
@@ -33,6 +35,7 @@ class FormServiceProvider extends ServiceProvider
             'form.textarea' => Textarea::class,
             'form.button' => Button::class,
         ]);
+        Livewire::component('form',Form::class);
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/4.php');
 
