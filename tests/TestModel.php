@@ -3,11 +3,14 @@ namespace UiBuilder\Form\Tests;
 
 use UiBuilder\Form\Contracts\HasForm;
 use Illuminate\Database\Eloquent\Model;
+use GetThingsDone\Types\Contracts\HasTypes;
 use UiBuilder\Form\Concerns\InteractsWithForm;
+use GetThingsDone\Types\Concerns\InteractsWithTypes;
 
-class TestModel implements HasForm
+class TestModel implements HasForm, HasTypes
 {
-    use InteractsWithForm;
+    use InteractsWithForm,
+        InteractsWithTypes;
     
     public function getFillable()
     {
@@ -19,13 +22,6 @@ class TestModel implements HasForm
     public function getCasts()
     {
         return [];
-    }
-
-    public function getAttributeNames()
-    {
-        return [
-            'name' => 'Name'
-        ];
     }
 
     public function getRules()

@@ -2,27 +2,35 @@
     <form wire:submit.prevent="save">
         
         @foreach($fieldsets as $fieldset => $value)
+        @php
+            $fieldsetKey = "fieldsets.$fieldset";
+        @endphp
         <div class="my-2">
-            <x-form.label for="{{ $fieldset }}" text="{{ $attributeNames[$fieldset] ?? null }}" />
+            <x-form.label for="{{ $fieldsetKey }}" text="{{ $attributeNames[$fieldset] ?? null }}" />
     
             <div class="mt-1">
-                @switch( $casts[$fieldset] ?? null )
+                @switch( $types[$fieldset] ?? null )
                     @case( 'code' )
-                        <x-form.input type="text" name="{{ $fieldset }}" value="{{ $value }}" autofocus disabled />
+                        <x-form.input type="text" name="{{ $fieldsetKey }}" value="{{ $value }}" autofocus disabled />
                         @break
                     @case( 'email' )
-                        <x-form.input type="email" name="{{ $fieldset }}"value="{{ $value }}" />
+                        <x-form.input type="email" name="{{ $fieldsetKey }}" value="{{ $value }}" />
                         @break
                     @case( 'textarea' )
-                        <x-form.textarea name="{{ $fieldset }}" value="{{ $value }}" />
+                        <x-form.textarea name="{{ $fieldsetKey }}" value="{{ $value }}" />
+                        @break
+                    @case( 'address' )
+                        <x-form.textarea name="{{ $fieldsetKey }}" value="{{ $value }}" />
+                        @break
+                    @case( 'description' )
+                        <x-form.textarea name="{{ $fieldsetKey }}" value="{{ $value }}" />
                         @break
                     @default
-                        <x-form.input type="text" name="{{ $fieldset }}" value="{{ $value }}" />
+                        <x-form.input type="text" name="{{ $fieldsetKey }}" value="{{ $value }}" />
                         @break
                 @endswitch
             </div>
-    
-            <x-form.error key="{{ $fieldset }}" />
+            <x-form.error key="{{ $fieldsetKey }}" />
         </div>
         @endforeach
         
