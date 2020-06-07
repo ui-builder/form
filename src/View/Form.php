@@ -20,16 +20,38 @@ class Form extends Component
 
     public $types = [];
     
+    public string $modelClassname;
+
+    public string $saveText = 'Create';
+
     public function mount(HasForm $model)
     {
-
         $this->model = $model;
+        $this->modelClassname = get_class($this->model);
         $this->setTypes();  
         $this->setFieldsets();
-
         $this->rules = $this->model->getRules();
         $this->attributeNames =  $this->model->getAttributeNames();
+    }
 
+    protected $listeners = [
+        'showModel' => 'showModel',
+        'createModel' => 'createModel'
+    ];
+
+    public function showModel($id)
+    {
+        $this->model = new $this->modelClassname;
+        $this->model = $this->model->find($id);
+        $this->setFieldsets();
+        $this->saveText = 'Edit';
+    }
+
+    public function createModel()
+    {
+        $this->model = new $this->modelClassname;
+        $this->setFieldsets();
+        $this->saveText = 'Create';
     }
 
     public function save()
@@ -62,6 +84,7 @@ class Form extends Component
         $this->emitUp('refresh');
 
     }
+
     public function render()
     {
         return view('form::basic');
@@ -103,7 +126,7 @@ class Form extends Component
                 continue;
             }
 
-            $fieldsets[$fieldset] = NULL;
+            $fieldsets[$fieldset] = $this->model->{$fieldset};
         }
 
         $this->fieldsets = $fieldsets;

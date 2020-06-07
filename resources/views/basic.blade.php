@@ -35,7 +35,7 @@
         @endforeach
         
         <div class="mt-6">
-            <x-form.button type="submit" text="Save" />
+            <x-form.button type="submit" text="{{ $saveText }}" />
         </div>
     </form>
 </div>
