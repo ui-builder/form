@@ -1,7 +1,10 @@
 <div>
-    <form wire:submit.prevent="save">
+    <form wire:submit.prevent="{{ $saveAction }}">
         
         @foreach($fieldsets as $fieldset => $value)
+            @if( 'id' === $fieldset)
+                @continue
+            @endif
         @php
             $fieldsetKey = "fieldsets.$fieldset";
         @endphp
