@@ -44,7 +44,7 @@ class Form extends Component
         $this->model = $this->getModel()->find($id);
 
         $this->setFieldsets();
-        $this->saveText = 'Update';
+        $this->saveText = __('attributes::action.update');
         $this->saveAction = "update";
         $this->resetValidation();
 
@@ -53,7 +53,7 @@ class Form extends Component
     public function createModel()
     {
         $this->setFieldsets();
-        $this->saveText = 'Create';
+        $this->saveText = __('attributes::action.create');;
         $this->saveAction = 'create';
         $this->resetValidation();
     }
