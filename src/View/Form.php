@@ -2,10 +2,9 @@
 namespace UiBuilder\Form\View;
 
 use Livewire\Component;
-use GetThingsDone\Types\Types;
+use GetThingsDone\Attributes\Attributes;
 use UiBuilder\Form\Contracts\HasForm;
-use GetThingsDone\Types\Contracts\HasTypes;
-use UiBuilder\Form\Factories\ValidatorFactory;
+use GetThingsDone\Attributes\Contracts\HasAttributes;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class Form extends Component
@@ -18,7 +17,7 @@ class Form extends Component
 
     public $attributeNames = [];
 
-    public $types = [];
+    public $attributes = [];
     
     public string $modelClassname;
 
@@ -29,7 +28,7 @@ class Form extends Component
     public function mount(HasForm $model)
     {
         $this->setModel(  $model );
-        $this->setTypes();  
+        $this->setAttributes();  
         $this->setFieldsets();
         $this->rules = $this->getModel()->getRules();
         $this->attributeNames =  $this->getModel()->getAttributeNames();
@@ -88,27 +87,27 @@ class Form extends Component
         return view('form::basic');
     }
 
-    protected function setTypes(): self
+    protected function setAttributes(): self
     {
-        if(!$this->getModel() instanceof HasTypes)
+        if(!$this->getModel() instanceof HasAttributes)
         {
             return $this;
         }
 
-        $types = [];
+        $attributes = [];
         
-        foreach($this->getModel()->getCasts() as $fieldset => $type)
+        foreach($this->getModel()->getCasts() as $fieldset => $attribute)
         {
-            if( Types::exists($type) )
+            if( Attributes::exists($attribute) )
             {
-                $types[$fieldset] = (new $type)->getAlias() ;
+                $attributes[$fieldset] = (new $attribute)->getAlias() ;
                 continue;
             }
 
-            $types[$fieldset] = $type;
+            $attributes[$fieldset] = $attribute;
         }
 
-        $this->types = $types;
+        $this->attributes = $attributes;
 
         return $this;
     }
@@ -121,7 +120,7 @@ class Form extends Component
 
         foreach($this->getModel()->getFieldsets() as $fieldset)
         {
-            if( !isset($this->types[$fieldset]) )
+            if( !isset($this->attributes[$fieldset]) )
             {
                 continue;
             }

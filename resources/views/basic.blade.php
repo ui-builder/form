@@ -12,7 +12,7 @@
             <x-form.label for="{{ $fieldsetKey }}" text="{{ $attributeNames[$fieldset] ?? null }}" />
     
             <div class="mt-1">
-                @switch( $types[$fieldset] ?? null )
+                @switch( $attributes[$fieldset] ?? null )
                     @case( 'code' )
                         <x-form.input type="text" name="{{ $fieldsetKey }}" value="{{ $value }}" autofocus disabled />
                         @break
