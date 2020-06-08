@@ -32,6 +32,8 @@ class Form extends Component
         $this->setFieldsets();
         $this->rules = $this->getModel()->getRules();
         $this->attributeNames =  $this->getModel()->getAttributeNames();
+
+        $this->createModel();
     }
 
     protected $listeners = [
