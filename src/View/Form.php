@@ -64,24 +64,27 @@ class Form extends Component
     {
         $this->validate();
 
-        $this->getModel()->create(
+        $model = $this->getModel()->create(
             $this->fieldsets
         );
 
         $this->emit('modelsCollectionRefresh');
+        $this->showModel($model->id);
     }
 
     public function update()
     {
         $this->validate();
 
-        $this->getModel()->find(
+        $model = $this->getModel()->find(
             $this->fieldsets['id']
-        )->update(
+        );
+        $model->update(
             $this->fieldsets
         );
 
         $this->emit('modelsCollectionRefresh');
+        $this->showModel($model->id);
     }
 
     public function render()
@@ -89,14 +92,12 @@ class Form extends Component
         return view('form::basic');
     }
 
-    protected function setAttributes(): self
+    protected function setAttributes(array $attributes = []): self
     {
         if(!$this->getModel() instanceof HasAttributes)
         {
             return $this;
         }
-
-        $attributes = [];
         
         foreach($this->getModel()->getCasts() as $fieldset => $attribute)
         {
