@@ -69,7 +69,7 @@ class Form extends Component
         );
 
         $this->emit('modelsCollectionRefresh');
-        $this->showModel($model->id);
+        $this->createModel($model->id);
     }
 
     public function update()
@@ -103,7 +103,7 @@ class Form extends Component
         {
             if( Attributes::exists($attribute) )
             {
-                $attributes[$fieldset] = (new $attribute)->getAlias() ;
+                $attributes[$fieldset] = (new $attribute)->getDefaultAlias() ;
                 continue;
             }
 

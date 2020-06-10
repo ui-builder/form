@@ -16,6 +16,9 @@
                     @case( 'code' )
                         <x-form.input type="text" name="{{ $fieldsetKey }}" value="{{ $value }}" autofocus disabled />
                         @break
+                    @case( 'product_code' )
+                        <x-form.input type="text" name="{{ $fieldsetKey }}" value="{{ $value }}" autofocus />
+                        @break
                     @case( 'email' )
                         <x-form.input type="email" name="{{ $fieldsetKey }}" value="{{ $value }}" />
                         @break
@@ -27,6 +30,9 @@
                         @break
                     @case( 'description' )
                         <x-form.textarea name="{{ $fieldsetKey }}" value="{{ $value }}" />
+                        @break
+                    @case( 'price' )
+                        <x-form.input type="number" name="{{ $fieldsetKey }}" value="{{ $value }}" min="0" />
                         @break
                     @default
                         <x-form.input type="text" name="{{ $fieldsetKey }}" value="{{ $value }}" />
