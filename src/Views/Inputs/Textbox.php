@@ -1,9 +1,9 @@
 <?php
-namespace UiBuilder\Form\View;
+namespace UiBuilder\Form\Views\Inputs;
 
 use Illuminate\View\Component;
 
-class Email extends Component
+class Textbox extends Component
 {
     public string $name;
 
@@ -13,6 +13,6 @@ class Email extends Component
     }
     public function render()
     {
-        return view('form::email');
+        return view('form::inputs.textbox');
     }
 }

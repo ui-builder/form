@@ -3,16 +3,14 @@
 namespace UiBuilder\Form;
 
 use Livewire\Livewire;
-use UiBuilder\Form\View\Form;
-use UiBuilder\Form\View\Email;
-use UiBuilder\Form\View\Error;
-use UiBuilder\Form\View\Input;
-use UiBuilder\Form\View\Label;
-use UiBuilder\Form\View\Button;
-use UiBuilder\Form\View\Textbox;
-use UiBuilder\Form\View\Textarea;
+use Illuminate\Support\Str;
+use UiBuilder\Form\Views\Form;
+use UiBuilder\Form\Views\Error;
+use UiBuilder\Form\Views\Label;
+use UiBuilder\Form\Views\Button;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use UiBuilder\Form\Views\Inputs\{Input,Textbox,Textarea,Email};
 
 class FormServiceProvider extends ServiceProvider
 {
@@ -27,13 +25,13 @@ class FormServiceProvider extends ServiceProvider
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'form');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'form');
         $this->loadViewComponentsAs('',[
-            'form.input' => Input::class,
             'form.label' => Label::class,
             'form.error'=> Error::class,
-            'form.textbox' => Textbox::class,
-            'form.email'=>Email::class,
-            'form.textarea' => Textarea::class,
             'form.button' => Button::class,
+            'form.inputs.input' => Input::class,
+            'form.inputs.textbox' => Textbox::class,
+            'form.inputs.email'=>Email::class,
+            'form.inputs.textarea' => Textarea::class,
         ]);
         Livewire::component('form',Form::class);
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -62,6 +60,20 @@ class FormServiceProvider extends ServiceProvider
             // Registering package commands.
             // $this->commands([]);
         }
+
+
+        Blade::directive('render', function ($expression) {
+
+            if( Str::contains($expression, ',') )
+            {
+                [$componentClassname, $attributes] = explode(',',$expression);
+            }else{
+                $componentClassname = $expression;
+                $attributes = '[]';
+            }
+            
+            return "<?php \$component = app($componentClassname); \$view = \$component->resolveView(); \$data = \$component->data(); \$data['attributes'] = new \Illuminate\View\ComponentAttributeBag($attributes); \$view->with(\$data); ?> {{ \$view }}";
+        });
     }
 
     /**
@@ -74,7 +86,7 @@ class FormServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('form', function () {
-            return new Form;
+            return new \UiBuilder\Form\Form;
         });
     }
 }

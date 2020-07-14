@@ -1,5 +1,5 @@
 <?php
-namespace UiBuilder\Form\View;
+namespace UiBuilder\Form\Views\Inputs;
 
 use Illuminate\View\Component;
 
@@ -13,6 +13,6 @@ class Textarea extends Component
     }
     public function render()
     {
-        return view('form::textarea');
+        return view('form::inputs.textarea');
     }
 }
