@@ -7,7 +7,7 @@ trait InteractsWithFormValidator
 {
     protected array $rules = [];
 
-    public function validate($rules, $messages = [], $attributes = [])
+    public function validateForm()
     {
         foreach($this->getRules() as $fieldset => $rule)
         {

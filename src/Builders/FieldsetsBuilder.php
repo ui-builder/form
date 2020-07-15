@@ -17,7 +17,7 @@ class FieldsetsBuilder
     
     protected string $key_prefix = 'values';
 
-    protected array $inputAttributes = [];
+    protected array $inputs = [];
     
     public function getFieldsets($fieldsets = []): Collection
     {
@@ -29,7 +29,7 @@ class FieldsetsBuilder
                 'key' => "{$this->key_prefix}.$name",
                 'value' => $this->getValues()[$name],
                 'component' => $this->getFieldsetViewComponent($attribute),
-                'inputAttributes' => $this->getInputAttributes()[$name] ?? null
+                'inputs' => $this->getInputs()[$name] ?? null
             ]);
         }
 
@@ -113,21 +113,21 @@ class FieldsetsBuilder
     }
 
     /**
-     * Get the value of inputAttributes
+     * Get the value of inputs
      */ 
-    public function getInputAttributes(): array
+    public function getInputs(): array
     {
-        return $this->inputAttributes;
+        return $this->inputs;
     }
 
     /**
-     * Set the value of inputAttributes
+     * Set the value of inputs
      *
      * @return  self
      */ 
-    public function setInputAttributes(array $inputAttributes): self
+    public function setInputs(array $inputs): self
     {
-        $this->inputAttributes = $inputAttributes;
+        $this->inputs = $inputs;
 
         return $this;
     }

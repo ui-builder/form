@@ -6,6 +6,7 @@ use UiBuilder\Form\Builders\FieldsetsBuilder;
 
 trait InteractsWithFieldsets
 {
+    protected array $inputs = [];
     
     public function getFieldsetsProperty(FieldsetsBuilder $builder): Collection
     {
@@ -17,6 +18,7 @@ trait InteractsWithFieldsets
                         ->setAttributes($attributes)
                         ->setLabels($labels)
                         ->setValues($this->values)
+                        ->setInputs($this->inputs)
                         ->getFieldsets();
 
         return $fieldsets;
