@@ -17,8 +17,6 @@ class Form extends Component implements HasModel, HasFieldsets, HasFormValidator
     use InteractsWithModel, InteractsWithFieldsets, InteractsWithFormValidator;
 
     public array $values = [];
-
-    public $image;
     
     protected array $labels = [];
 
