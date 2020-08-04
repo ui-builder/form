@@ -1,21 +1,28 @@
 <?php
 namespace UiBuilder\Form\Concerns;
 
+use Illuminate\Support\Facades\Redirect;
+use GetThingsDone\Attributes\Adapters\CacheAdapter;
 use GetThingsDone\Attributes\Contracts\HasCastAttributes;
 
 trait InteractsWithModel
 {
 
-    protected HasCastAttributes $model;
+    public ?string $modelCachedKey;
 
-    public string $modelClassname;
+    protected function getCacheAdapter()
+    {
+        return app(CacheAdapter::class);
+    }
 
     /**
      * Get the value of model
      */ 
     public function getModel()
     {
-        return $this->model ?? new $this->modelClassname;
+        return $this->getCacheAdapter()
+                    ->setKey( $this->modelCachedKey )
+                    ->getData() ?? Redirect::back();
     }
 
     /**
@@ -25,8 +32,27 @@ trait InteractsWithModel
      */ 
     public function setModel(HasCastAttributes $model)
     {
-        $this->model = $model;
-        $this->modelClassname =  $this->modelClassname ?? get_class($this->model);
+        $this->modelCachedKey = $this->getCacheAdapter()
+                                    ->generateKey()
+                                    ->setData( $model )
+                                    ->getKey();
+
         return $this;
+    }
+
+    public function syncModel($id): self
+    {   
+        $model = $this->getModel()->firstWhere('id',$id);
+
+        $this->setModel($model);
+
+        return $this;
+    }
+
+    public function resetModel()
+    {
+        $classname = get_class( $this->getModel() );
+        $model =  new $classname;
+        $this->setModel($model);
     }
 }

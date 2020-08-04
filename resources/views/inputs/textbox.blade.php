@@ -1,1 +1,5 @@
-<x-form.input type="text" :name="$name" {{ $attributes }} />
+@include( 'form::inputs.input',[
+    'type' => 'text',
+    'name' => $name,
+    'attributes' => $attributes
+])

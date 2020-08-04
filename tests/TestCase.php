@@ -2,6 +2,7 @@
 
 namespace UiBuilder\Form\Tests;
 
+use GetThingsDone\Attributes\AttributesServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use UiBuilder\Form\FormServiceProvider;
@@ -14,6 +15,7 @@ class TestCase extends BaseTestCase
         return [
             FormServiceProvider::class,
             LivewireServiceProvider::class,
+            AttributesServiceProvider::class,
         ];
     }
     

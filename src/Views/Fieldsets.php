@@ -14,6 +14,6 @@ class Fieldsets extends Component
     }
     public function render()
     {
-        return view('form::fiedsets');
+        return view('form::fieldsets');
     }
 }

@@ -19,15 +19,22 @@ class FieldsetsBuilder
 
     protected array $inputs = [];
     
+    protected array $hidden = [];
+    
     public function getFieldsets($fieldsets = []): Collection
     {
         foreach($this->getAttributes() as $name => $attribute)
         {
-            $fielsets[] = new Fieldset([
+            if( $this->isHidden($name) )
+            {
+                continue;
+            }
+
+            $fieldsets[] = new Fieldset([
                 'name' => $name,
                 'label' => $this->getLabels()[$name],
                 'key' => "{$this->key_prefix}.$name",
-                'value' => $this->getValues()[$name],
+                'value' => $this->getValues()[$name] ?? null,
                 'component' => $this->getFieldsetViewComponent($attribute),
                 'inputs' => $this->getInputs()[$name] ?? null
             ]);
@@ -38,7 +45,7 @@ class FieldsetsBuilder
 
     protected function getMapper()
     {
-        return config('fieldsets.mapper');
+        return config('form.fieldsets.mapper');
     }
 
     protected function getFieldsetViewComponent($attribute)
@@ -130,5 +137,30 @@ class FieldsetsBuilder
         $this->inputs = $inputs;
 
         return $this;
+    }
+
+    /**
+     * Get the value of hidden
+     */ 
+    public function getHidden(): array
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * Set the value of hidden
+     *
+     * @return  self
+     */ 
+    public function setHidden(array $hidden): self
+    {
+        $this->hidden = $hidden;
+
+        return $this;
+    }
+
+    public function isHidden(string $name): bool
+    {
+        return in_array($name, $this->hidden);
     }
 }

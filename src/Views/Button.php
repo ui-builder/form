@@ -1,5 +1,5 @@
 <?php
-namespace UiBuilder\Form\View;
+namespace UiBuilder\Form\Views;
 
 use Illuminate\View\Component;
 

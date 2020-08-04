@@ -1,25 +1,10 @@
 <div>
-    <form wire:submit.prevent="{{ $saveAction }}">
+    <form wire:submit.prevent="">
         
-        @foreach($this->fieldsets as $fieldset)
-
-            @if( null === $fieldset->component)
-                @continue
-            @endif
-            
-        <div class="my-2">
-            <x-form.label for="{{ $fieldset->key }}" text="{{ $fieldset->label ?? null }}" />
-    
-            <div class="mt-1">
-                @render( $fieldset->component, $fieldset->data )
-            </div>
-
-            <x-form.error key="{{ $fieldset->key }}" />
-        </div>
-        @endforeach
+        <x-form.fieldsets :fieldsets="$this->fieldsets" />
         
         <div class="mt-6">
-            <x-form.button type="submit" text="{{ $saveText }}" />
+            <x-form.button type="submit" text="{{ __('form::action.save') }}" />
         </div>
     </form>
 </div>

@@ -1,5 +1,5 @@
 <?php
-namespace UiBuilder\Form\View;
+namespace UiBuilder\Form\Views;
 
 use Livewire\Component;
 use UiBuilder\Form\Contracts\HasModel;
@@ -16,16 +16,23 @@ class Form extends Component implements HasModel, HasFieldsets, HasFormValidator
 {
     use InteractsWithModel, InteractsWithFieldsets, InteractsWithFormValidator;
 
-    public array $rules = [];
-
     public array $values = [];
 
+    public $image;
+    
     protected array $labels = [];
+
+    protected array $inputs = [];
+    
+    protected array $hidden = [
+        'id','created_at','updated_at','deleted_at'
+    ];
+
+    protected array $rules = [];
 
     public function mount(HasCastAttributes $model)
     {
         $this->setModel(  $model );
-        $this->setRules();
     }
 
     public function render()

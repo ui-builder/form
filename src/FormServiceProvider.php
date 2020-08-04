@@ -8,9 +8,10 @@ use UiBuilder\Form\Views\Form;
 use UiBuilder\Form\Views\Error;
 use UiBuilder\Form\Views\Label;
 use UiBuilder\Form\Views\Button;
+use UiBuilder\Form\Views\Fieldsets;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use UiBuilder\Form\Views\Inputs\{Input,Textbox,Textarea,Email};
+use UiBuilder\Form\Views\Inputs\{Input,Textbox,Textarea,Email, Image};
 
 class FormServiceProvider extends ServiceProvider
 {
@@ -22,20 +23,22 @@ class FormServiceProvider extends ServiceProvider
         /*
          * Optional methods to load your package assets
          */
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'form');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'form');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'form');
         $this->loadViewComponentsAs('',[
             'form.label' => Label::class,
             'form.error'=> Error::class,
             'form.button' => Button::class,
+            'form.fieldsets' => Fieldsets::class,
             'form.inputs.input' => Input::class,
             'form.inputs.textbox' => Textbox::class,
             'form.inputs.email'=>Email::class,
             'form.inputs.textarea' => Textarea::class,
+            'form.inputs.image' => Image::class,
         ]);
         Livewire::component('form',Form::class);
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/4.php');
+        // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -53,9 +56,9 @@ class FormServiceProvider extends ServiceProvider
             ], 'assets');*/
 
             // Publishing the translation files.
-            /*$this->publishes([
+            $this->publishes([
                 __DIR__.'/../resources/lang' => resource_path('lang/vendor/form'),
-            ], 'lang');*/
+            ], 'lang');
 
             // Registering package commands.
             // $this->commands([]);
@@ -72,7 +75,7 @@ class FormServiceProvider extends ServiceProvider
                 $attributes = '[]';
             }
             
-            return "<?php \$component = app($componentClassname); \$view = \$component->resolveView(); \$data = \$component->data(); \$data['attributes'] = new \Illuminate\View\ComponentAttributeBag($attributes); \$view->with(\$data); ?> {{ \$view }}";
+            return "<?php \$component = app($componentClassname, $attributes); \$view = \$component->resolveView(); \$data = \$component->data(); \$data['attributes'] = new \Illuminate\View\ComponentAttributeBag({$attributes}['input'] ?? []); \$view->with(\$data); ?> {{ \$view }}";
         });
     }
 

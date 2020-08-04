@@ -10,6 +10,8 @@ return [
         'mapper' => [
             \GetThingsDone\Attributes\Attributes\Code::class => \UiBuilder\Form\Views\Inputs\Textbox::class,
             \GetThingsDone\Attributes\Attributes\Name::class => \UiBuilder\Form\Views\Inputs\Textbox::class,
+            \GetThingsDone\Attributes\Attributes\Text::class => \UiBuilder\Form\Views\Inputs\Textbox::class,
+            // \GetThingsDone\Attributes\Attributes\Image::class => \UiBuilder\Form\Views\Inputs\Image::class,
         ]
     ]
 ];

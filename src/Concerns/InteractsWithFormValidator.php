@@ -5,7 +5,6 @@ use GetThingsDone\Attributes\Builders\RulesBuilder;
 
 trait InteractsWithFormValidator
 {
-    protected array $rules = [];
 
     public function validateForm()
     {
