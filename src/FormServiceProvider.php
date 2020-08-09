@@ -11,7 +11,7 @@ use UiBuilder\Form\Views\Button;
 use UiBuilder\Form\Views\Fieldsets;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use UiBuilder\Form\Views\Inputs\{Input,Textbox,Textarea,Email, Image};
+use UiBuilder\Form\Views\Inputs\{Input,Textbox,Textarea,Email, Image, Quantity};
 
 class FormServiceProvider extends ServiceProvider
 {
@@ -35,6 +35,7 @@ class FormServiceProvider extends ServiceProvider
             'form.inputs.email'=>Email::class,
             'form.inputs.textarea' => Textarea::class,
             'form.inputs.image' => Image::class,
+            'form.inputs.quantity' => Quantity::class,
         ]);
         Livewire::component('form',Form::class);
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
