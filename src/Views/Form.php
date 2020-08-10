@@ -18,6 +18,8 @@ class Form extends Component implements HasModel, HasFieldsets, HasFormValidator
 
     public array $values = [];
     
+    public array $defaultValues = [];
+
     protected array $labels = [];
 
     protected array $inputs = [];
@@ -30,6 +32,9 @@ class Form extends Component implements HasModel, HasFieldsets, HasFormValidator
 
     public function mount(HasCastAttributes $model)
     {
+        $modelData = $model->toArray();
+        $this->defaultValues = $modelData;
+        $this->values = $modelData;
         $this->setModel(  $model );
     }
 

@@ -52,7 +52,7 @@ trait InteractsWithModel
     public function resetModel()
     {
         $classname = get_class( $this->getModel() );
-        $model =  new $classname;
+        $model =  new $classname($this->defaultValues);
         $this->setModel($model);
     }
 }

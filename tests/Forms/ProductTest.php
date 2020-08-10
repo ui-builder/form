@@ -21,6 +21,29 @@ class ProductTest extends TestCase
             mkdir('../../vendor/orchestra/testbench-core/laravel/app/Http/Livewire', 0777, true);
         }
     }
+
+    /**
+     * @test
+     */
+    public function mount()
+    {
+        $product = Product::create([
+            'code' => 'productcode',
+            'name' => 'Product Name',
+            'size' => 'Size XL'
+        ]);
+
+        Livewire::test(ProductForm::class, [ 'model' => $product] )
+            ->assertSet('defaultValues.id',1)
+            ->assertSet('defaultValues.code','productcode')
+            ->assertSet('defaultValues.name','Product Name')
+            ->assertSet('defaultValues.size','Size XL')
+            ->assertSet('values.id',1)
+            ->assertSet('values.code','productcode')
+            ->assertSet('values.name','Product Name')
+            ->assertSet('values.size','Size XL');
+    }
+
     /**
      * @test
      */
@@ -74,7 +97,7 @@ class ProductTest extends TestCase
     /** @test */
     public function edit(){
 
-        Product::create([
+        $product = Product::create([
             'code' => 'productcode',
             'name' => 'Product Name',
             'size' => 'Size XL'
